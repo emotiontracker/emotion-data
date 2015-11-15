@@ -21,9 +21,9 @@ var db  = null;
 
 // Make sure the following directories exist.
 // For ffmpeg and sox make sure the appropriate binaries exist at the given path.
-var DATA_DIR    = '/home/ec2-user/pleasure/data';
-var FFPMEG_PATH = 'ffmpeg/ffmpeg';
-var SOX_PATH    = '/var/pleasure/sox/src/sox';
+var AUDIO_DATA_DIR    = '/home/ec2-user/pleasure/data';
+var FFPMEG_PATH       = 'ffmpeg/ffmpeg';
+var SOX_PATH          = '/var/pleasure/sox/src/sox';
 
 var columnizer = function(){
     var columns = [],
@@ -426,18 +426,18 @@ app.get('/users', function(req, res){
     });
 });
 
-app.use('/rec', express.static(DATA_DIR + '/rec'));
+app.use('/rec', express.static(AUDIO_DATA_DIR + '/rec'));
 
 app.post('/remove', function(req, res){
     try{
         var name = req.query.name.replace(/ /g,'');
         if(req.query.type == 'one'){
-            fs.unlinkSync(DATA_DIR + name);
+            fs.unlinkSync(AUDIO_DATA_DIR + name);
         }
         else if(req.query.type == 'all'){
             glob('rec/' + name + "-*", {}, function (er, files) {
                 files.forEach(function(f){
-                    fs.unlinkSync(DATA_DIR + f);
+                    fs.unlinkSync(AUDIO_DATA_DIR + f);
                 });
             });        
         }
@@ -460,13 +460,13 @@ app.post('/convert', function(req, res){
     }
 
     var fileid = (+new Date()).toString(36),
-        tmpPath = DATA_DIR + 'rec/' + fileid + '.wav',
-        intmPath = DATA_DIR + 'rec/' + name + '-' + fileid + '.wav',
+        tmpPath = AUDIO_DATA_DIR + 'rec/' + fileid + '.wav',
+        intmPath = AUDIO_DATA_DIR + 'rec/' + name + '-' + fileid + '.wav',
         finalPath = 'rec/' + name + '-' + fileid + ((type == 'mac') ? '.ogg' : '.mp3');
 
     try{
         var form = new formidable.IncomingForm({ 
-            uploadDir: DATA_DIR + 'tmp',
+            uploadDir: AUDIO_DATA_DIR + 'tmp',
             keepExtensions: true
         });
 
@@ -499,7 +499,7 @@ app.post('/convert', function(req, res){
                         throw '[Sox error] ' + stderr;
                     }    
                     else{
-                        exec( FFPMEG_PATH + ' -y -i ' + intmPath + ' -af "volume=' + gain + 'dB" ' + DATA_DIR + finalPath , function (error, stdout, stderr){
+                        exec( FFPMEG_PATH + ' -y -i ' + intmPath + ' -af "volume=' + gain + 'dB" ' + AUDIO_DATA_DIR + finalPath , function (error, stdout, stderr){
                             fs.unlinkSync(intmPath);
                             if(error){
                                 throw '[Ffmpeg error] ' + stderr;
@@ -525,7 +525,7 @@ app.post('/convert', function(req, res){
 app.get('/converted', function(req, res){
     try{
         var name = req.query.q.replace(/ /g,'');
-        glob("rec/" + name + "-*", {cwd:DATA_DIR}, function (er, files) {
+        glob("rec/" + name + "-*", {cwd:AUDIO_DATA_DIR}, function (er, files) {
             res.send(files);
         });        
     }
