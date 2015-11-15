@@ -1,0 +1,21 @@
+extends ./base.jade
+
+block title
+    title Forgot your password? | Pleasure admin
+
+block heading
+
+
+block content
+
+    h2.title Reset password
+
+    .info Enter your new account password below. Once confirmed, you'll be directed to the login page and your new password will be active.
+    div !{message}
+    form(method='POST')
+        div
+            input.inpt(type='password', name='password', value='', placeholder='New password', autofocus=true)
+        div
+            input.inpt(type='password', name='confirm', value='', placeholder='Confirm password')
+        
+        button.btn.btn-primary(type='submit') Update Password

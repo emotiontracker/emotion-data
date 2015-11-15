@@ -1,0 +1,59 @@
+extends ./layout.jade
+
+block content
+
+    h3 Experimenters
+    table
+        thead
+            tr
+                th Name
+                th Email
+                th University
+                th City
+                if admin.role <= 1
+                    th Moderator
+        tbody
+            if users.length > 0
+                each user in users
+                    if user.role > 0
+                        tr
+                            td #{user.name}
+                            td #{user.email}
+                            td #{user.university}
+                            td #{user.city}
+                            if admin.role <= 1
+                                td(width="100")
+                                    if user.role == 1
+                                        div Yes
+                                    else
+                                        input(type="button" value="Assign" class="btn btn-primary assign-btn" data-id="#{user._id}")
+
+            else
+                tr 
+                    td(colspan="5" class="none") No Users.
+
+    h3 Pending requests 
+    table
+        thead
+            tr
+                th Name
+                th Email
+                th University
+                th City
+                th Status
+        tbody
+            if approve.length > 0
+                each user in approve
+                    tr
+                        td #{user.name}
+                        td #{user.email}
+                        td #{user.university}
+                        td #{user.city}
+                        td(width="100")
+                            input(type="button" value="Accept" class="btn accept-btn" data-id="#{user._id}")
+            else
+                tr 
+                    td(colspan="5" class="none") No Users.
+
+
+    

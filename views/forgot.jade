@@ -1,0 +1,23 @@
+extends ./base.jade
+
+block title
+    title Forgot your password? | Pleasure admin
+
+block heading
+
+
+block content
+
+    h2.title= (!status || status == 0) ? 'Forgot your password?' : 'Reset email sent'
+
+    if !status || status == 0
+        .info Enter the registered email address below to reset your password. You will be sent an email which you need to open to continue. 
+        div !{message}
+        form(method="post")
+            div
+                input(type="text", id="email", name="email", class="inpt", placeholder="Email address", autofocus)
+            button.btn.btn-primary(type='submit') Reset password
+
+            
+    else
+        .info We have sent a password reset email to your email address: <b>#{email}</b>. <br/><br/>Please check your inbox to continue.

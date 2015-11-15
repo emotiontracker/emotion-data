@@ -1,0 +1,26 @@
+doctype html
+html
+    head
+        title #{title || 'Home'} | Emotion admin
+
+        link(rel="stylesheet", href="/static/css/normalize.css")
+        link(rel="stylesheet", href="/static/css/style.css")
+
+    body
+        #topBar
+            .wrapper.row
+                h1.admin-title.col
+                    a(href="/" class="row")
+                        img(src="/static/img/logo_title.png" class="col")
+                        .col admin
+                .col-right.row
+                    .col.name #{admin.name}
+                    .col
+                        a(href="/logout") Logout
+
+        #content
+            .wrapper
+                block content
+
+    script(src='https://code.jquery.com/jquery-2.1.3.min.js')
+    script(src='/static/js/main.js')
