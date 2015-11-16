@@ -21,9 +21,9 @@ var db  = null;
 
 // Make sure the following directories exist.
 // For ffmpeg and sox make sure the appropriate binaries exist at the given path.
-var AUDIO_DATA_DIR    = '/home/ec2-user/pleasure/data';
+var AUDIO_DATA_DIR    = '/home/ec2-user/emotion-audio-data';
 var FFPMEG_PATH       = 'ffmpeg/ffmpeg';
-var SOX_PATH          = '/var/pleasure/sox/src/sox';
+var SOX_PATH          = '/var/emotion-data/sox/src/sox';
 
 var columnizer = function(){
     var columns = [],
@@ -854,7 +854,7 @@ app.get('/expdata', function(req, res) {
     });
 });
 
-MongoClient.connect('mongodb://127.0.0.1:27017/pleasure', function(err, _db) {
+MongoClient.connect('mongodb://127.0.0.1:27017/emotion-data', function(err, _db) {
     if(err) console.error(err);
     db = _db;
     var server = app.listen(80, function() {
