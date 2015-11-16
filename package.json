@@ -1,9 +1,9 @@
 {
-  "name": "pleasure-back",
-  "version": "0.0.1",
+  "name": "emotion-data",
+  "version": "0.0.2",
   "private": true,
   "dependencies": {
-    "express": "~4.2.0",
+    "express": "*",
     "express-session": "^1.10.3",
     "formidable": "*",
     "glob": "*",
